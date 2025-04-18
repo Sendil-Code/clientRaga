@@ -1,0 +1,249 @@
+{%- from "templates/print_formats/standard_macros.html" import add_header, render_field -%}
+<html>
+
+<body>
+    <br>
+
+
+    <table border=1 px width="100%" , bordercolor=b lack>
+        <tr>
+            <td colspan=6>
+                <center>
+                    <font size="1"><b> Supply Meant For Export Under LUT without Payment of IGST </b></td>
+        </tr>
+
+        <tr>
+            <td colspan=6>
+                <p style="font-size:15px; text-align:center; color: #022a46f3">
+                    <font face="Trebuchet MS"><b>PACKING LIST</b></p>
+            </td>
+        </tr>
+    </table>
+    <table border=1 px width="100%" , bordercolor=b lack>
+        <tr>
+            <td rowspan=3 ; class="valign-top"> <strong> <p style="color: #ffffff; background-color: #030242">Exporters : </p></strong>
+                <font size="1">{{doc.company_address}}<br> {{doc.company_address_display}}
+                    <!-- {{doc.company_gstin}}</b></font></td> -->
+                    <td class="valign-top"><strong><font size = "1"> Packing list No. & Date: </strong>
+                        <space><br> {{doc.rt_serial_code}}&nbsp; & &nbsp;{{doc.get_formatted("file_date")}} </font>
+                </br>
+                </td>
+                <td class="valign-top"> <strong><font size = "1">Exporter's Ref : </strong>
+                    <space><br> &nbsp;{{doc.exporters_ref or ''}}</font>
+                        </br>
+                </td>
+        </tr>
+        <tr>
+            <td colspan=2 ; class="valign-top"><strong><font size = "1">Buyer's Order No. & Date : </strong>
+                <space><br><b> ORDER NO.:{{doc.invoice_no}} &nbsp; & &nbsp;{{doc.get_formatted("po_date")}}</b></font>
+                    </br>
+            </td>
+        </tr>
+        <tr>
+            <td colspan=2 ; class="valign-top"> <strong><font size = "1">Other Reference(s) : </strong>
+                <space> {{doc.other_reference}} <br>&nbsp; <b> DC# : {{doc.dc_no}}</b></br>
+                    </font>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan=4 ; class="valign-top"> <strong><p style="color: #ffffff; background-color: #030242">Consignee : </p></strong>
+                <font size="1">{{doc.customer_address}}<br> {{doc.address_display}}
+                </font>
+            </td>
+        </tr>
+        <tr>
+            <td colspan=3 ; class="valign-top">
+                <font size="1"><strong>Buyer (if other then Consignee):</strong>
+                    <space> {{doc.buyer_cons or ''}}</td>
+        </tr>
+        <td class="valign-top"> <strong><font size = "1">Country of origin of goods : </strong>
+            <space><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {{doc.country_of_origin}}</br>
+        </td>
+        <td class="valign-top"><strong> <font size = "1">Country of Final Destination : </strong>
+            <space><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {{doc.country_of_final_destination}}</br>
+        </td>
+        <tr>
+            <td colspan=2 ; class="valign-top">
+                <font size="1"><strong> Terms of Delivery and Payment : </strong> &nbsp; <b>FOB&nbsp {{doc.get_formatted("fob")}} </b> </br>
+            </td>
+        </tr>
+
+
+        <table border=1 width="100%">
+
+            <tr font face="Trebuchet MS">
+                <th>
+                    <font size="1">
+                        <center>Pre-Carriage by</font>
+                </th>
+                <th>
+                    <font size="1">
+                        <center>Vessel / Flight No.</font>
+                </th>
+                <th>
+                    <font size="1">
+                        <center>Place of Receipt by Pre-carrier</font>
+                </th>
+                <th>
+                    <font size="1">
+                        <center>Port of Loading</font>
+                </th>
+                <th>
+                    <font size="1">
+                        <center>Port of Discharge</font>
+                </th>
+                <th>
+                    <font size="1">
+                        <center>Final Destination</font>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <font size="1">
+                        <font face="Trebuchet MS"><b><center>{{ doc.pre_carriage_by }}</font></b></td>
+                <td>
+                    <font size="1">
+                        <font face="Trebuchet MS">
+                            <center>{{ doc.vessel_no or ''}}</font>
+                </td>
+                <td>
+                    <font size="1">
+                        <font face="Trebuchet MS">
+                            <center>{{ doc.place_of_precarrier or ''}}</font>
+                </td>
+                <td>
+                    <font size="1">
+                        <font face="Trebuchet MS"><b><center>{{ doc.port_of_loading }}</font></b></td>
+                <td>
+                    <font size="1">
+                        <font face="Trebuchet MS"><b><center>{{ doc.port_of_discharge }}</font></b></td>
+                <td>
+                    <font size="1">
+                        <font face="Trebuchet MS"><b><center>{{ doc.final_destination }}</font></b></td>
+            </tr>
+        </table>
+
+
+        <table border=1 px width="100%" , bordercolor=b lack>
+
+            <tr>
+
+                <th class="text-center">
+                    <font size="1">Marks & Nos. /<br> No.&Kind of Pkgs<br> Container No.</th>
+                <th class="text-center">
+                    <font size="1">CODE</th>
+                <th class="text-center">
+                    <font size="1">CTN NOS</th>
+                <th class="text-center">
+                    <font size="1">Description of Goods <br><b><u> ITEMS</u></th>  
+    <th class="text-center"><font size = "1"><b><u> NO OF PC/ <br> PER CTN</u></th> 
+    <th class="text-center"><font size = "1"> <b><u> NO OF CTNS </u></b></th>
+                <th class="text-center">
+                    <font size="1"> <u>QUANTITY </u><br> PIECES</br>
+                </th>
+                <th class="text-center">
+                    <font size="1"> <u>NET WT <br>IN KGS </u> </th>
+                <th class="text-center">
+                    <font size="1"> <u>GROSS WT <br>IN KGS</th> 
+
+    </tr>        
+    {% set newcount = namespace(serial=0) %}
+    {% set ctncount = namespace(sno=0) %}
+    {% set counter = namespace(serial=0) %}
+    {% set articlecount = namespace(sno=0) %}  
+    {% set rowcount = namespace(sno=0) %} 
+    {% set total_crtns = namespace(ctn=0, ctns=0) %} 
+    {% set pieces = namespace(count=0) %}  
+    {% set totweight = namespace(wgt=0) %} 
+    {% set tot = namespace(gross_weight=0,net_weight=0) %}    
+    {% set master = namespace(pcs=0) %}
+    {% set total = namespace(pcs=0) %}
+    {% set noofctn  = namespace(ctn=0) %}
+    {% set master = namespace(ctns=0) %} 
+    {% set total = namespace(master=0) %}
+    {% set modifiedlist = [] %} 
+
+    {% for row in doc.items %}  
+        <!-- <tr><td>{{ row.items | length }}</td></tr> -->           
+        {% set item={"po_no":row.po_no,"marks_number":row.marks_number, "buyer_code_number":row.buyer_code_number, "nest_code":row.nest_code, "composition": row.composition, "item_name":row.item_name,"dimension":row.item_name.split("-")[2], "master": row.master, "net_weight":row.net_weight, "set_gross_weight":row.set_gross_weight } %}
+        {% set modifiedlist = (modifiedlist.append(item),modifiedlist) %}                                   
+    {% endfor %}
+
+    {% set articlecount.sno = 0 %}                             
+        {% for row in modifiedlist | groupby ('composition') %}     
+            {% set articlecount.sno = articlecount.sno + 1 %}             
+            {% for itemrowsbynestcode in doc.items | groupby ('nest_code') %}   
+                {% set newcount.serial = 0 %} 
+                {% set total_weights= itemrowsbynestcode[1]|sum(attribute='total_weight') %}
+                {% set total_qty_nestcode = itemrowsbynestcode[1]|sum(attribute='qty') %}                   
+
+                    {% for rows in itemrowsbynestcode.list %}                                             
+                        {% set master.ctns =  rows.qty / rows.master %} 
+                        {% set newcount.serial = newcount.serial + 1 %}                    
+                         {% set total_crtns.ctns = total_crtns.ctns + master.ctns %}                   
+                    {% endfor %}                            
+            {% endfor %}
+
+            {% if articlecount.sno == 1 %}  
+                 <td rowspan = "1000">{{ "{:,.0f}".format (total_crtns.ctns) }}<br>{{ doc.marks_no }} {{ doc.from_ctn }} -- {{doc.to_ctn}}</td> 
+                 <tr><td colspan = "8"><center> COTTON POWERLOOM YARN DYED <br> MADEUPS OF INDIAN ORIGIN </td></tr>                   
+                <tr><td colspan= "8"><b><center>{{ row.grouper }} <br><u> ORDER NO: {{doc.invoice_no}}</u></b>
+                        </br>
+                        {% endif %} {% set total_crtns.ctn = 0 %} {% for item in doc.items| groupby('nest_code') %} {% set newcount.sno = 0 %} {% set total_weight_nestcode = item[1]|sum(attribute='total_weight') %} {% for rowitem in item.list %} {% set sumcrtns = item[1]|sum(attribute='no_of_crtns')
+                        %} {% set totnets = item[1]|sum(attribute='box_net_weight') %} {% set totgross = item[1]|sum(attribute='box_gross_weight') %} {% set crtns = total_weight_nestcode / rowitem.net_weight %} {% set tot_net_weight = crtns * rowitem.gross_weight
+                        %} {% set newcount.sno = newcount.sno + 1 %} {% set counter.serial = counter.serial + 1 %}
+                        <tr>
+                            <td span class="text-center" ; width="10%">
+                                <font face="Trebuchet MS">
+                                    <center>{{rowitem.buyer_code_number}}</center>
+                                </font>
+                            </td>
+                            {% if newcount.sno == 1 %}
+                            <td rowspan=" {{ item.list |length}}" ; width="8%">
+                                <font face="Trebuchet MS">
+                                    <center>{{rowitem.from_ctn_nos}}</center>
+                                </font>
+                            </td>
+                            {% endif %}
+                            <td>
+                                <font face="Trebuchet MS">{{rowitem.item_name}}</font>
+                            </td>
+                            <td span class="text-center" ; width="10%">
+                                <font face="Trebuchet MS">{{rowitem.pcs_inner}}</font>
+                            </td>
+                            {% if newcount.sno == 1 %}
+                            <td rowspan=" {{ item.list |length}}" ; width="10%">
+                                <font face="Trebuchet MS">
+                                    <center>{{ "{: .0f}".format (sumcrtns) }}</center>
+                                </font>
+                            </td>
+                            {% set total_crtns.ctn = total_crtns.ctn + sumcrtns %} {% endif %}
+                            <td>
+                                <center>
+                                    <font face="Trebuchet MS">{{ "{: .0f}".format (rowitem.qty)}}<br>{{rowitem.uoms}}</center>
+                                </font>
+                            </td>
+                            {% if newcount.sno == 1 %}
+                            <td rowspan=" {{ item.list |length}}" ; width="10%" ; span class="text-right">
+                                <font face="Trebuchet MS">{{ "{: .3f}".format (totnets ) }}</font>
+                            </td>
+                            <td rowspan=" {{ item.list |length}}" ; width="10%" ; span class="text-right">
+                                <font face="Trebuchet MS">{{ "{: .3f}".format (totgross) }}</font>
+                            </td>
+                            {% set tot.net_weight = tot.net_weight + totnets %} {% set totweight.wgt = totweight.wgt + totgross %} {% endif %} {% endfor %} {% endfor %} {% endfor %}
+
+                            <tr>
+                                <td colspan=4><b><center>&nbsp; </b></td>
+                                <td><b> <center><font face = "Trebuchet MS"><b> &nbsp {{ "{: .0f}".format (total_crtns.ctn) }}<br> <center">{{ ("CTNS") }}</center></b></td>
+                                <td><b> <center><font face = "Trebuchet MS"><b> &nbsp {{ "{: .0f}".format (doc.total_quantity) }}<br> <center">{{ ("SETS/PCS") }}</center></b></td>
+                                <td span class="text-right"><b><font face = "Trebuchet MS"><b>{{ "{: .3f}".format (tot.net_weight) }}<br><center">{{ ("KGS") }}</center></font></b></td>
+                                <td span class="text-right" ; width="10%"> <b><font face = "Trebuchet MS">{{ "{: .3f}".format (totweight.wgt) }}<br><center">{{ ("KGS") }}</center></b></font>
+                    </td>
+
+                    </tr>
+        </table>
+        <br>
+        <br>
+        <td>
+            <font size="1"> <strong>Volume : &nbsp; &nbsp; {{doc.total_volume}} &nbsp; CBM</strong></font>
+        </td>
