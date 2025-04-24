@@ -163,8 +163,7 @@
     {% set total = namespace(master=0) %}
     {% set modifiedlist = [] %} 
 
-    {% for row in doc.items %}  
-        <!-- <tr><td>{{ row.items | length }}</td></tr> -->           
+    {% for row in doc.items %}           
         {% set item={"po_no":row.po_no,"marks_number":row.marks_number, "buyer_code_number":row.buyer_code_number, "nest_code":row.nest_code, "composition": row.composition, "item_name":row.item_name,"dimension":row.item_name.split("-")[2], "master": row.master, "net_weight":row.net_weight, "set_gross_weight":row.set_gross_weight } %}
         {% set modifiedlist = (modifiedlist.append(item),modifiedlist) %}                                   
     {% endfor %}
@@ -174,23 +173,23 @@
             {% set articlecount.sno = articlecount.sno + 1 %}             
             {% for itemrowsbynestcode in doc.items | groupby ('nest_code') %}   
                 {% set newcount.serial = 0 %} 
-                {% set total_weights= itemrowsbynestcode[1]|sum(attribute='total_weight') %}
+                {% set total_weights= itemrowsbynestcode[1]|sum(attribute='total_net_weight') %}
                 {% set total_qty_nestcode = itemrowsbynestcode[1]|sum(attribute='qty') %}                   
 
                     {% for rows in itemrowsbynestcode.list %}                                             
                         {% set master.ctns =  rows.qty / rows.master %} 
                         {% set newcount.serial = newcount.serial + 1 %}                    
-                         {% set total_crtns.ctns = total_crtns.ctns + master.ctns %}                   
+                        {% set total_crtns.ctns = total_crtns.ctns + master.ctns %}                   
                     {% endfor %}                            
             {% endfor %}
 
             {% if articlecount.sno == 1 %}  
                  <td rowspan = "1000">{{ "{:,.0f}".format (total_crtns.ctns) }}<br>{{ doc.marks_no }} {{ doc.from_ctn }} -- {{doc.to_ctn}}</td> 
                  <tr><td colspan = "8"><center> COTTON POWERLOOM YARN DYED <br> MADEUPS OF INDIAN ORIGIN </td></tr>                   
-                <tr><td colspan= "8"><b><center>{{ row.grouper }} <br><u> ORDER NO: {{doc.invoice_no}}</u></b>
+                 <tr><td colspan= "8"><b><center>{{ row.grouper }} <br><u> ORDER NO: {{doc.invoice_no}}</u></b>
                         </br>
-                        {% endif %} {% set total_crtns.ctn = 0 %} {% for item in doc.items| groupby('nest_code') %} {% set newcount.sno = 0 %} {% set total_weight_nestcode = item[1]|sum(attribute='total_weight') %} {% for rowitem in item.list %} {% set sumcrtns = item[1]|sum(attribute='no_of_crtns')
-                        %} {% set totnets = item[1]|sum(attribute='box_net_weight') %} {% set totgross = item[1]|sum(attribute='box_gross_weight') %} {% set crtns = total_weight_nestcode / rowitem.net_weight %} {% set tot_net_weight = crtns * rowitem.gross_weight
+                        {% endif %} {% set total_crtns.ctn = 0 %} {% for item in doc.items| groupby('nest_code') %} {% set newcount.sno = 0 %} {% set total_weight_nestcode = item[1]|sum(attribute='total_weight') %} {% for rowitem in item.list %} {% set sumcrtns = item[1]|sum(attribute='no_of_crtns')%}
+                        {% set totnets = item[1]|sum(attribute='box_net_weight') %} {% set totgross = item[1]|sum(attribute='box_gross_weight') %} {% set crtns = total_weight_nestcode / rowitem.net_weight %} {% set tot_net_weight = crtns * rowitem.gross_weight
                         %} {% set newcount.sno = newcount.sno + 1 %} {% set counter.serial = counter.serial + 1 %}
                         <tr>
                             <td span class="text-center" ; width="10%">
@@ -205,12 +204,15 @@
                                 </font>
                             </td>
                             {% endif %}
+
                             <td>
                                 <font face="Trebuchet MS">{{rowitem.item_name}}</font>
                             </td>
+
                             <td span class="text-center" ; width="10%">
                                 <font face="Trebuchet MS">{{rowitem.pcs_inner}}</font>
                             </td>
+
                             {% if newcount.sno == 1 %}
                             <td rowspan=" {{ item.list |length}}" ; width="10%">
                                 <font face="Trebuchet MS">
@@ -223,6 +225,7 @@
                                     <font face="Trebuchet MS">{{ "{: .0f}".format (rowitem.qty)}}<br>{{rowitem.uoms}}</center>
                                 </font>
                             </td>
+
                             {% if newcount.sno == 1 %}
                             <td rowspan=" {{ item.list |length}}" ; width="10%" ; span class="text-right">
                                 <font face="Trebuchet MS">{{ "{: .3f}".format (totnets ) }}</font>
